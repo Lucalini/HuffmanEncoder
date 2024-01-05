@@ -3,8 +3,6 @@ import subprocess
 from ordered_list import *
 from huffman import *
 
-
-
 class TestList(unittest.TestCase):
     def test_cnt_freq(self):
         freqlist = cnt_freq("file2.txt")
@@ -49,13 +47,11 @@ class TestList(unittest.TestCase):
         right = hufftree.right
         self.assertEqual(right.freq, 7)
         self.assertEqual(right.char, ord("a"))
-
         
     def test_create_header(self):
         freqlist = cnt_freq("file2.txt")
         self.assertEqual(create_header(freqlist), "97 2 98 4 99 8 100 16 102 2")
-
-        
+   
     def test_create_code(self):
         freqlist = cnt_freq("file2.txt")
         hufftree = create_huff_tree(freqlist)
@@ -64,7 +60,6 @@ class TestList(unittest.TestCase):
         self.assertEqual(codes[ord('a')], '0000')
         self.assertEqual(codes[ord('f')], '0001')
         self.assertEqual(codes[ord('z')], '')
-
         
     def test_01_textfile(self):
         huffman_encode("file1.txt", "file1_out.txt")
@@ -76,14 +71,15 @@ class TestList(unittest.TestCase):
         # capture errors by running 'diff' on your encoded file with a *known* solution file
         self.assertEqual(subprocess.call("diff -wb file2_out.txt file2_soln.txt", shell = True), 0)
         self.assertEqual(subprocess.call("diff -wb file2_out_compressed.txt file2_compressed_soln.txt", shell = True), 0)
-    # def test_WAP_textfile(self):
-    #     huffman_encode("file_WAP.txt", "file_WAP_out.txt")
-    #     # capture errors by running 'diff' on your encoded file with a *known* solution file
-    #     self.assertEqual(subprocess.call("diff -wb file_WAP_out_compressed.txt file_WAP_compressed_soln.txt", shell = True), 0)
-    # def test_DOI_textfile(self):
-    #     huffman_encode("declaration.txt", "declaration_out.txt")
-    #     self.assertEqual(subprocess.call("diff -wb declaration_out.txt declaration_soln.txt", shell = True), 0)
-    #     self.assertEqual(subprocess.call("diff -wb declaration_out_compressed.txt declaration_compressed_soln.txt", shell = True), 0)
+        
+    def test_WAP_textfile(self):
+        huffman_encode("file_WAP.txt", "file_WAP_out.txt")
+        # capture errors by running 'diff' on your encoded file with a *known* solution file
+        self.assertEqual(subprocess.call("diff -wb file_WAP_out_compressed.txt file_WAP_compressed_soln.txt", shell = True), 0)
+    def test_DOI_textfile(self):
+        huffman_encode("declaration.txt", "declaration_out.txt")
+        self.assertEqual(subprocess.call("diff -wb declaration_out.txt declaration_soln.txt", shell = True), 0)
+        self.assertEqual(subprocess.call("diff -wb declaration_out_compressed.txt declaration_compressed_soln.txt", shell = True), 0)
 
 
     def test_empty(self):
@@ -139,13 +135,13 @@ class TestList(unittest.TestCase):
         self.assertEqual(subprocess.call("diff -wb single_val_decode.txt single_val.txt", shell = True), 0)
 
 
-    # def test_decode_WAP(self):
-    #     huffman_decode("file_WAP_out_compressed.txt", "file_WAP_decode.txt")
-    #     self.assertEqual(subprocess.call("diff -wb file_WAP_decode.txt file_WAP.txt", shell = True), 0)
-    #
-    # def test_decode_DOP(self):
-    #     huffman_decode("declaration_out_compressed.txt", "declaration_decode.txt")
-    #     self.assertEqual(subprocess.call("diff -wb declaration_decode.txt declaration.txt", shell = True), 0)
+    def test_decode_WAP(self):
+        huffman_decode("file_WAP_out_compressed.txt", "file_WAP_decode.txt")
+        self.assertEqual(subprocess.call("diff -wb file_WAP_decode.txt file_WAP.txt", shell = True), 0)
+    
+    def test_decode_DOP(self):
+        huffman_decode("declaration_out_compressed.txt", "declaration_decode.txt")
+        self.assertEqual(subprocess.call("diff -wb declaration_decode.txt declaration.txt", shell = True), 0)
 
 if __name__ == '__main__': 
    unittest.main()
